@@ -2,10 +2,10 @@
 # Created by Diablo76 on 04/01/2024 -- 00:44:10.
 
 from PyQt6.QtCore import QRect, pyqtSignal
-from PyQt6.QtWidgets import QCheckBox, QDialog, QGridLayout, QPushButton, QWidget
+from PyQt6.QtWidgets import QCheckBox, QGridLayout, QPushButton, QWidget
 
 
-class UbuntuDesktopFileCategoriesView(QDialog):
+class UbuntuDesktopFileCategoriesView(QWidget):
     """Manage the Ubuntu Desktop File Categories View.
 
     This class represents the dialog window for selecting categories.
