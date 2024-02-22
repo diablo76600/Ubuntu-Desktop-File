@@ -40,9 +40,9 @@ class UbuntuDesktopFileCategoriesView(QDialog):
 
         # Set window title and size
         self.setWindowTitle("Select your categories")
-        self.setFixedSize(602, 207)
+        self.setFixedSize(512, 160)
         self.verticalLayoutWidget = QWidget(self)
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 602, 207))
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 502, 150))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.gridLayout_checkbox = QGridLayout()
         #
