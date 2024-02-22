@@ -8,7 +8,7 @@ from udf_ui_view import UbuntuDesktopFileView as UdfView
 from udf_ui_categories_view import UbuntuDesktopFileCategoriesView as UdfCategoriesView
 from udf_model import UbuntuDesktopFileModel as UdfModel
 
-from PyQt6.QtWidgets import QMessageBox, QCheckBox, QLineEdit, QFileDialog
+from PyQt6.QtWidgets import QMessageBox, QCheckBox, QLineEdit, QFileDialog, QApplication
 from PyQt6.QtGui import QPixmap, QFontMetrics
 from PyQt6.QtCore import Qt
 
@@ -24,7 +24,7 @@ class UbuntuDesktopFileController:
         udf_categories_view: The view component for the Ubuntu Desktop File Categories.
         udf_model: The model component for the Ubuntu Desktop File."""
 
-    def __init__(self, app,  udf_view: UdfView, udf_categories_view: UdfCategoriesView, udf_model: UdfModel) -> None:
+    def __init__(self, app: QApplication,  udf_view: UdfView, udf_categories_view: UdfCategoriesView, udf_model: UdfModel) -> None:
         self.app = app
         self.udf_view = udf_view
         self.udf_categories_view = udf_categories_view
@@ -209,7 +209,8 @@ class UbuntuDesktopFileController:
         destination, _ = QFileDialog.getSaveFileName(
             self.udf_view,
             "Save Desktop file",
-            file_name
+            file_name,
+            filter="*.desktop"
         )
         return destination
 

@@ -2,10 +2,10 @@
 # Created by Diablo76 on 04/01/2024 -- 00:44:10.
 
 from PyQt6.QtCore import QRect, pyqtSignal
-from PyQt6.QtWidgets import QCheckBox, QGridLayout, QPushButton, QWidget
+from PyQt6.QtWidgets import QCheckBox, QGridLayout, QVBoxLayout, QDialogButtonBox, QWidget, QDialog
 
 
-class UbuntuDesktopFileCategoriesView(QWidget):
+class UbuntuDesktopFileCategoriesView(QDialog):
     """Manage the Ubuntu Desktop File Categories View.
 
     This class represents the dialog window for selecting categories.
@@ -41,37 +41,29 @@ class UbuntuDesktopFileCategoriesView(QWidget):
         # Set window title and size
         self.setWindowTitle("Select your categories")
         self.setFixedSize(602, 207)
-
-        # Create a grid layout to hold the checkboxes
-        self.gridLayoutWidget = QWidget(self)
-        self.gridLayoutWidget.setGeometry(QRect(8, 8, 585, 165))
-        self.gridLayout = QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-
-        # Add checkboxes for each category to the grid layout
+        self.verticalLayoutWidget = QWidget(self)
+        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 602, 207))
+        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.gridLayout_checkbox = QGridLayout()
+        #
         for index, category in enumerate(self.CATEGORIES):
             row, col = divmod(index, 5)
-            checkbox = QCheckBox(self.gridLayoutWidget)
+            checkbox = QCheckBox(self.verticalLayoutWidget)
             checkbox.setText(category)
-            self.gridLayout.addWidget(checkbox, row, col, 1, 1)
-
-        # Create an "Ok" button and connect its clicked signal to the get_type_categories method
-        self.pushButton = QPushButton(self)
-        self.pushButton.setText("Ok")
-        button_x = int((self.width() / 2) - 34)
-        button_y = 168
-        button_width = 68
-        button_height = 32
-        self.pushButton.setGeometry(
-            QRect(button_x, button_y, button_width, button_height)
-        )
-        self.pushButton.clicked.connect(self.emit_categories_and_close)
+            self.gridLayout_checkbox.addWidget(checkbox, row, col, 1, 1)
+        #
+        self.verticalLayout.addLayout(self.gridLayout_checkbox)
+        self.buttonBox = QDialogButtonBox(self.verticalLayoutWidget)
+        self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
+        self.buttonBox.setCenterButtons(True)
+        self.buttonBox.accepted.connect(self.emit_categories_and_close)
+        self.verticalLayout.addWidget(self.buttonBox)
 
     def _get_type_categories(self) -> list[str]:
         # Retrieve the selected categories from the checkboxes
         return [
             check_box.text()
-            for check_box in self.gridLayoutWidget.findChildren(QCheckBox)
+            for check_box in self.verticalLayoutWidget.findChildren(QCheckBox)
             if check_box.isChecked()
         ]
 
