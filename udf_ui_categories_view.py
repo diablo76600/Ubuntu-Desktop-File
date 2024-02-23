@@ -40,20 +40,21 @@ class UbuntuDesktopFileCategoriesView(QDialog):
 
         # Set window title and size
         self.setWindowTitle("Select your categories")
-        self.setFixedSize(512, 160)
-        self.verticalLayoutWidget = QWidget(self)
-        self.verticalLayoutWidget.setGeometry(QRect(0, 0, 502, 150))
-        self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.setFixedSize(512, 150)
+        # Ceate central widget
+        self.centralWidget = QWidget(self)
+        self.centralWidget.setGeometry(QRect(0, 0, 502, 150))
+        self.verticalLayout = QVBoxLayout(self.centralWidget)
         self.gridLayout_checkbox = QGridLayout()
         #
         for index, category in enumerate(self.CATEGORIES):
             row, col = divmod(index, 5)
-            checkbox = QCheckBox(self.verticalLayoutWidget)
+            checkbox = QCheckBox(self.centralWidget)
             checkbox.setText(category)
             self.gridLayout_checkbox.addWidget(checkbox, row, col, 1, 1)
         #
         self.verticalLayout.addLayout(self.gridLayout_checkbox)
-        self.buttonBox = QDialogButtonBox(self.verticalLayoutWidget)
+        self.buttonBox = QDialogButtonBox(self.centralWidget)
         self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.buttonBox.setCenterButtons(True)
         self.buttonBox.accepted.connect(self.emit_categories_and_close)
@@ -63,7 +64,7 @@ class UbuntuDesktopFileCategoriesView(QDialog):
         # Retrieve the selected categories from the checkboxes
         return [
             check_box.text()
-            for check_box in self.verticalLayoutWidget.findChildren(QCheckBox)
+            for check_box in self.centralWidget.findChildren(QCheckBox)
             if check_box.isChecked()
         ]
 
