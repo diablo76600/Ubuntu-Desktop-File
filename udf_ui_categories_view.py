@@ -14,6 +14,7 @@ class UbuntuDesktopFileCategoriesView(QDialog):
     Attributes:
         categories_selected: A signal emitted when categories are selected."""
 
+    # Defines a signal categories_selected 
     categories_selected = pyqtSignal(list)
 
     # Predefined categories
@@ -37,7 +38,6 @@ class UbuntuDesktopFileCategoriesView(QDialog):
 
     def __init__(self) -> None:
         super().__init__()
-
         # Set window title and size
         self.setWindowTitle("Select your categories")
         self.setFixedSize(512, 150)
@@ -46,14 +46,15 @@ class UbuntuDesktopFileCategoriesView(QDialog):
         self.centralWidget.setGeometry(QRect(0, 0, 502, 150))
         self.verticalLayout = QVBoxLayout(self.centralWidget)
         self.gridLayout_checkbox = QGridLayout()
-        #
+        # Create checkboxes for each predefined category
         for index, category in enumerate(self.CATEGORIES):
             row, col = divmod(index, 5)
             checkbox = QCheckBox(self.centralWidget)
             checkbox.setText(category)
             self.gridLayout_checkbox.addWidget(checkbox, row, col, 1, 1)
-        #
+        # Add the grid layout to the vertical layout
         self.verticalLayout.addLayout(self.gridLayout_checkbox)
+        # Create and connect the "Ok" button
         self.buttonBox = QDialogButtonBox(self.centralWidget)
         self.buttonBox.setStandardButtons(QDialogButtonBox.StandardButton.Ok)
         self.buttonBox.setCenterButtons(True)
@@ -69,7 +70,9 @@ class UbuntuDesktopFileCategoriesView(QDialog):
         ]
 
     def emit_categories_and_close(self) -> None:
+        # Get the selected categories using _get_type_categories
         list_categories = self._get_type_categories()
         # Emit the selected categories as a signal
         self.categories_selected.emit(list_categories)
+        # Close the dialog window
         super().close()
